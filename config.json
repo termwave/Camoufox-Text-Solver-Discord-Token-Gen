@@ -1,0 +1,11 @@
+{
+  "mail_imap": "mail.termzen.cloud",
+  "check_ratelimit": true,
+  "proxies": false,
+  "groq_api_key": "",
+  "model": "llama-3.3-70b-versatile",
+  "headless": true,
+  "use_ai_solver": true,
+  "max_tokens":128,
+  "temperature": 0.95
+}

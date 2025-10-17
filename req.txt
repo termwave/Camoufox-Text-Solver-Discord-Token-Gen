@@ -1,0 +1,15 @@
+asyncio
+requests
+pystyle
+colorama
+beautifulsoup4
+camoufox
+imapclient
+email-validator
+lxml
+aiohttp
+httpx
+tls-client
+typing-extensions
+groq
+notify-py

@@ -1,32 +1,10 @@
-import asyncio
-import threading
-import time
-import random
-import json
-import os
-from datetime import datetime
-from typing import Optional, List, Dict
-import requests
-from pystyle import System, Center
-from colorama import Fore, Style
-from datetime import datetime
-import re
-from camoufox.async_api import AsyncCamoufox
-from bs4 import BeautifulSoup
-import sys
-import string
-from enum import Enum
-import warnings
-from solver import Solver
-from concurrent.futures import ThreadPoolExecutor, as_completed
-import imaplib
-import email
-from notifypy import Notify
+import asyncio, threading, time, random, json, os, re, sys, string, warnings, imaplib, email, requests; from datetime import datetime; from typing import Optional, List, Dict; from enum import Enum; from concurrent.futures import ThreadPoolExecutor, as_completed; from pystyle import System, Center; from colorama import Fore, Style; from camoufox.async_api import AsyncCamoufox; from bs4 import BeautifulSoup; from solver import Solver
 
 warnings.filterwarnings("ignore", message=".*geoip=True.*", category=Warning)
 
 RESET = "\033[0m"
 ANSI_PATTERN = re.compile(r'\033\[[0-9;]*m')
+
 def write_print(text, interval=0.01, hide_cursor=True, end=RESET):
     if hide_cursor:
         sys.stdout.write("\033[?25l")
@@ -58,11 +36,7 @@ class LogLevel(Enum):
     ERROR = 5
     CRITICAL = 6
 
-async def check_account_disability(page, thread_id: int, email: str):
-    """
-    Check if the Discord account is disabled after verification
-    Returns: tuple (is_disabled: bool, status_message: str)
-    """
+async def check_acc_disability(page, thread_id: int, email: str):
     try:
         await asyncio.sleep(3)
         current_url = page.url.lower()
@@ -98,7 +72,7 @@ async def check_account_disability(page, thread_id: int, email: str):
     except Exception as e:
         log.warning(f"❌ Could not check account status {e}")
         return False, "check_failed"
-    
+
 class Logger:
     def __init__(self, level: LogLevel = LogLevel.DEBUG):
         self.level = level
@@ -145,7 +119,6 @@ class Logger:
 log = Logger()
 
 def print_gradient(text, start_color=(137, 207, 240), end_color=(25, 25, 112)):
-    """Thread-safe gradient text printing"""
     lines = text.split('\n')
     total_lines = len(lines)
     try:
@@ -172,7 +145,6 @@ def print_gradient(text, start_color=(137, 207, 240), end_color=(25, 25, 112)):
             print(f"{color_code}{line}{Style.RESET_ALL}")
 
 def thread_print(message: str, color: str = ""):
-    """Thread-safe print function"""
     try:
         with log.write_lock:
             if color:
@@ -263,17 +235,8 @@ async def extract_token(page):
         await asyncio.sleep(1)
 
 def send_notif(title, message):
-    if not config.get("notify"):
-        return
-    try:
-        notification = Notify()
-        notification.application_name = "Termwave"
-        notification.title = title
-        notification.message = message
-        notification.send()
-    except Exception as e:
-        log.error(f"❌ Notification error {e}")
-        
+    pass
+
 class ProxyManager:
     def __init__(self, proxy_file: str = "proxies.txt"):
         self.proxy_file = proxy_file
@@ -513,7 +476,6 @@ async def captcha_solver(page):
         return False
 
 async def wait_for_captcha_ready(page):
-    """Wait for captcha to be ready - either has #checkbox or is image-based"""
     while True:
         try:
             checkbox_ready = await page.evaluate("""
@@ -560,7 +522,6 @@ async def wait_for_captcha_ready(page):
             await asyncio.sleep(1)
 
 async def retry_ai_solver_until_solved_or_timeout(page, start_time, total_timeout):
-    """Retry AI solver until solved or 5-minute timeout from Create Account click"""
     attempt = 1
     max_attempts = 10
     while attempt <= max_attempts:
@@ -607,7 +568,6 @@ async def retry_ai_solver_until_solved_or_timeout(page, start_time, total_timeou
     return await wait_for_manual_captcha_completion_with_timeout(page, total_timeout, start_time)
 
 async def wait_for_captcha_frames(page, timeout: int = 15):
-    """Wait for captcha frames to be fully loaded and ready"""
     start_time = time.time()
     while time.time() - start_time < timeout:
         try:
@@ -638,7 +598,6 @@ async def wait_for_captcha_frames(page, timeout: int = 15):
     return False
 
 async def detect_captcha_thoroughly(page):
-    """Enhanced captcha detection"""
     try:
         await asyncio.sleep(1)
         iframe_captcha = await page.evaluate("""
@@ -698,7 +657,6 @@ async def detect_captcha_thoroughly(page):
         return False
 
 async def is_captcha_truly_solved(page):
-    """Check if captcha is truly solved"""
     try:
         await asyncio.sleep(2)
         current_url = page.url
@@ -736,7 +694,6 @@ async def is_captcha_truly_solved(page):
         return False
 
 async def wait_for_manual_captcha_completion_with_timeout(page, timeout_seconds, start_time):
-    """Wait for manual captcha completion with timeout from Create Account click"""
     check_interval = 2
     while True:
         try:
@@ -779,7 +736,6 @@ async def monitor_for_captcha(page, phase_name, timeout_minutes=5):
         return True
 
 async def wait_for_page_ready_infinite(page, timeout_minutes=2):
-    """Simplified page ready check - removed completely as it's not used"""
     pass
 
 def generate_username():
@@ -1316,7 +1272,6 @@ async def post_submission_captcha_monitoring(page, email):
         await asyncio.sleep(1)
 
 async def fill_discord_form(page, email, password):
-    """Simplified form filling without retries and timeouts"""
     try:
         username, display_name = generate_username()
         birth_month, birth_day, birth_year, month_name = generate_dob()
@@ -1453,7 +1408,6 @@ class AccountManager:
             return None
 
     def get_proxy_for_thread(self, thread_id: int) -> Optional[dict]:
-        """Get a unique proxy for each thread with rotation"""
         if not self.proxy_manager:
             return None
         try:
@@ -1467,7 +1421,6 @@ class AccountManager:
             return None
 
     def progress(self, thread_id: int, message: str, status: str = "info"):
-        """Thread-safe progress updates with clean formatting"""
         if "Starting:" in message:
             email = message.split("Starting: ")[1]
         elif "SUCCESS:" in message:
@@ -1481,7 +1434,6 @@ class AccountManager:
             log.info(f"[T{thread_id:02d}] {clean_message}")
 
     def stats(self, status: str):
-        """Thread-safe stats update"""
         with self.stats_lock:
             if status == "success":
                 self.successful += 1
@@ -1489,22 +1441,18 @@ class AccountManager:
                 self.failed += 1
 
     def get_current_stats(self) -> tuple:
-        """Get current stats in thread-safe manner"""
         with self.stats_lock:
             return self.successful, self.locked, self.suspended, self.failed
 
     def increment_active_threads(self):
-        """Thread-safe increment of active threads"""
         with self.thread_lock:
             self.active_threads += 1
 
     def decrement_active_threads(self):
-        """Thread-safe decrement of active threads"""
         with self.thread_lock:
             self.active_threads -= 1
 
     def get_active_threads(self) -> int:
-        """Get current active thread count"""
         with self.thread_lock:
             return self.active_threads
 
@@ -1515,7 +1463,6 @@ class AccountManager:
         password: str,
         headless: bool = None
     ) -> tuple:
-        """Wrapper for async account processing with proper thread management"""
         self.increment_active_threads()
         loop = asyncio.new_event_loop()
         asyncio.set_event_loop(loop)
@@ -1665,7 +1612,7 @@ class AccountManager:
                 result["status"] = "timeout"
                 return page_instance, result
             try:
-                is_disabled, disability_status = await check_account_disability(page_instance, thread_id, email)
+                is_disabled, disability_status = await check_acc_disability(page_instance, thread_id, email)
                 if is_disabled:
                     result["status"] = "account_disabled"
                     self.progress(thread_id, f"❌ Account disabled {email}", "error")
@@ -1703,7 +1650,6 @@ class AccountManager:
                 log.debug(f"❌ Browser cleanup error {e}")
 
     async def navigate_to_discord_with_retry(self, page, thread_id: int, max_retries: int = 3):
-        """Navigate to Discord with retry logic"""
         for attempt in range(max_retries):
             try:
                 await asyncio.wait_for(
@@ -1721,7 +1667,6 @@ class AccountManager:
                 raise e
 
     async def wait_for_page_ready_with_timeout(self, page, thread_id: int, timeout: int = 30):
-        """Wait for page ready with timeout"""
         start_time = time.time()
         while time.time() - start_time < timeout:
             try:
@@ -1745,7 +1690,6 @@ class AccountManager:
         raise TimeoutError(f"❌ Page ready timeout")
 
     async def fill_discord_form_with_retry(self, page, email: str, password: str, thread_id: int) -> bool:
-        """Fill Discord form with retry logic"""
         max_retries = 3
         for attempt in range(max_retries):
             try:
@@ -1766,7 +1710,6 @@ class AccountManager:
             return {"success": False, "token": None}
         
     def run(self):
-        """Main execution method with accounts-per-thread logic"""
         try:
             accounts_per_thread = int(input(Fore.CYAN + f"[{Fore.MAGENTA}?{Fore.CYAN}] Number of accounts to create : "))
             if accounts_per_thread < 0:
@@ -1840,7 +1783,6 @@ class AccountManager:
         self._print_final_statistics(accounts_per_thread)
 
     def _print_final_statistics(self, accounts_per_thread):
-        """Print clean final statistics"""
         successful, locked, suspended, failed = self.get_current_stats()
         total_processed = successful + locked + suspended + failed
         with log.write_lock:
@@ -1850,7 +1792,6 @@ class AccountManager:
             sys.stdout.flush()
 
     def _process_infinite_mode_parallel(self, headless_mode: bool):
-        """Process infinite mode with all threads running in parallel"""
         log.info(f"Starting {self.max_threads} threads for infinite account creation...")
         with ThreadPoolExecutor(max_workers=self.max_threads) as executor:
             futures = []
@@ -1871,7 +1812,6 @@ class AccountManager:
                     future.cancel()
 
     def _infinite_thread_worker(self, thread_id: int, headless_mode: bool):
-        """Clean infinite worker with proper logging"""
         account_counter = 0
         try:
             while True:
@@ -1921,7 +1861,6 @@ class AccountManager:
             log.warning(f"[T{thread_id:02d}] Worker stopped")
 
     def _process_accounts_per_thread(self, accounts_per_thread: int, headless_mode: bool):
-        """Process specific number of accounts per thread"""
         with ThreadPoolExecutor(max_workers=self.max_threads) as executor:
             futures = []
             for thread_id in range(1, self.max_threads + 1):
@@ -1940,7 +1879,6 @@ class AccountManager:
         return None, {"success": True, "completed_threads": completed_threads}
 
     def _thread_worker(self, thread_id: int, accounts_per_thread: int, headless_mode: bool):
-        """Clean thread worker with proper logging"""
         for account_num in range(1, accounts_per_thread + 1):
             try:
                 with open("input.txt", "r") as f:
@@ -1978,7 +1916,6 @@ class AccountManager:
                 self.update_stats("failed")
 
     def _check_rate_limit_threadsafe(self):
-        """Thread-safe rate limit check"""
         try:
             time.sleep(random.uniform(0.1, 0.5))
             headers = {
@@ -2027,7 +1964,7 @@ class AccountManager:
 banner = '''   ▄████   ██▓    ▄▄▄       ▄████▄   ██▓ ▓█████ ██▀███  
 ▒ ██▒ ▀█▒ ▓██▒   ▒████▄    ▒██▀ ▀█ ▒▓██▒ ▓█   ▀▓██ ▒ ██▒
 ░▒██░▄▄▄░ ▒██░   ▒██  ▀█▄  ▒▓█    ▄▒▒██▒ ▒███  ▓██ ░▄█ ▒
-░░▓█  ██▓ ▒██░   ░██▄▄▄▄██▒▒▓▓▄ ▄██░░██░ ▒▓█  ▄▒██▀▀█▄  
+░▓█  ██▓ ▒██░   ░██▄▄▄▄██▒▒▓▓▄ ▄██░░██░ ▒▓█  ▄▒██▀▀█▄  
 ░▒▓███▀▒░▒░██████▒▓█   ▓██░▒ ▓███▀ ░░██░▒░▒████░██▓ ▒██▒
  ░▒   ▒  ░░ ▒░▓  ░▒▒   ▓▒█░░ ░▒ ▒   ░▓  ░░░ ▒░ ░ ▒▓ ░▒▓░
   ░   ░  ░░ ░ ▒  ░ ░   ▒▒    ░  ▒  ░ ▒ ░░ ░ ░    ░▒ ░ ▒ 

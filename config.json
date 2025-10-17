@@ -1,5 +1,5 @@
 {
-  "mail_imap": "mail.termzen.cloud",
+  "mail_imap": "",
   "check_ratelimit": true,
   "proxies": false,
   "groq_api_key": "",
@@ -8,4 +8,5 @@
   "use_ai_solver": true,
   "max_tokens":128,
   "temperature": 0.95
+
 }

@@ -142,6 +142,7 @@ Each line in `proxies.txt` represents a proxy entry.
 ## 🧑‍💻 Developer
 
 **Author:** `Notiny X Termwave`  
+**Contributor:** `DevDream`  
 **Project:** Ultimate Discord Automation Suite  
 **License:** MIT  
 **Created With:** 💙 Python + Async Magic

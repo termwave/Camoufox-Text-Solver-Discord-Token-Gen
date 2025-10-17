@@ -1,12 +1,4 @@
-import asyncio
-import os
-import time
-import json
-import random
-import requests
-import math
-from typing import Optional, Dict, List, Tuple
-import groq
+import asyncio, os, time, json, random, requests, math, groq; from typing import Optional, Dict, List, Tuple
 
 class Agent:
     def __init__(self, config_path='config.json'):
@@ -110,7 +102,6 @@ class Agent:
         elif clean == "false" or clean.startswith("f"):
             return "nein"
         return "nein"
-
 
 class GroqClient:
     def __init__(self, api_key: str, base_url: str):

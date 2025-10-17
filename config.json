@@ -1,5 +1,6 @@
 {
   "mail_imap": "",
+  "notify": "true",
   "check_ratelimit": true,
   "proxies": false,
   "groq_api_key": "",
@@ -10,3 +11,4 @@
   "temperature": 0.95
 
 }
+

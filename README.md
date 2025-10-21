@@ -1,62 +1,60 @@
-# ❄️ Glacier — Ultimate Discord Account Creator
+# ❄️ Glacier — Discord Account Creator
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Python-3.10%2B-blue.svg?style=for-the-badge" />
-  <img src="https://img.shields.io/badge/Async-Automation-success.svg?style=for-the-badge" />
-  <img src="https://img.shields.io/badge/HCaptcha-Solver-purple.svg?style=for-the-badge" />
-  <img src="https://img.shields.io/badge/Developer-NotinyXTermwave_-pink.svg?style=for-the-badge" />
-</p>
+![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue.svg?style=for-the-badge)
+![Async Automation](https://img.shields.io/badge/Async-Automation-success.svg?style=for-the-badge)
+![HCaptcha Solver](https://img.shields.io/badge/HCaptcha-Solver-purple.svg?style=for-the-badge)
 
 ---
 
-## 🧊 Overview
+## What is Glacier?
 
-**Glacier** is a next-generation Discord account generator designed for automation with **human-like behavior**, **proxy rotation**, and **AI-powered captcha solving**.  
-It leverages advanced browser automation with **Camoufox**, integrates **Groq AI**, and provides a **thread-safe logging** system with vibrant terminal output.
-
----
-
-## ⚙️ Key Features
-
-- 🔥 **Async Multi-threaded Automation**  
-  Handles multiple Discord registrations concurrently with optimal resource management.
-
-- 🧠 **AI-Powered CAPTCHA Solver**  
-  Uses the `Solver` module with **Groq API** to solve hCaptcha challenges via LLaMA models.
-
-- 🧍‍♂️ **Human-Like Mouse & Typing Simulation**  
-  Emulates natural user behavior (Bezier motion, random delays, and micro-movements).
-
-- 🧩 **Proxy Management System**  
-  Automatic parsing and rotation of proxies from `proxies.txt`.
-
-- 📬 **Mail Verification Support**  
-  IMAP-based inbox monitoring to extract Discord verification links automatically.
-
-- 🌈 **Colorized & Thread-Safe Logging**  
-  Custom logger with timestamped gradient output and neat formatting.
-
-- 🔔 **Real-time Desktop Notifications**  
-  Integrates with `notifypy` for visual success/error alerts.
+Glacier is an automated Discord account creation tool that helps you generate accounts efficiently. It mimics real user behavior, handles proxy rotation, and can solve captchas using AI assistance. The tool uses advanced browser automation to make the process feel natural and includes a clean, colorful terminal interface.
 
 ---
 
-## 🧩 Project Structure
+## What Can It Do?
+
+**Runs Multiple Tasks at Once**  
+Create several Discord accounts simultaneously without slowing down your system.
+
+**Smart Captcha Solving**  
+Uses Groq AI and LLaMA models to automatically handle hCaptcha challenges when they pop up.
+
+**Acts Like a Real Person**  
+Moves the mouse naturally, types at human speed, and adds random pauses to avoid detection.
+
+**Proxy Support Built-In**  
+Automatically reads and switches between proxies from your proxy list.
+
+**Email Verification**  
+Monitors your inbox through IMAP and grabs verification links automatically.
+
+**Beautiful Console Output**  
+Thread-safe logging with colors, timestamps, and gradient effects that make monitoring easy.
+
+**Desktop Alerts**  
+Get notifications on your desktop when accounts are created successfully or if something goes wrong.
+
+---
+
+## Project Files
+
+Here's what you'll find in the folder:
 
 ```
-📦 Glacier
-├── main.py          # Core logic & automation flow
-├── solver.py        # AI-based captcha solving engine
-├── config.json      # User configuration file
-├── proxies.txt      # Proxy list for rotation
-└── requirements.txt # Dependencies
+Glacier/
+├── main.py          → The main automation script
+├── solver.py        → Captcha solving logic
+├── config.json      → Your settings
+├── proxies.txt      → Your proxy list
+└── requirements.txt → Required Python packages
 ```
 
 ---
 
-## 🔧 Configuration
+## Setting Things Up
 
-Create a `config.json` in the project root:
+First, create a `config.json` file with your settings:
 
 ```json
 {
@@ -72,88 +70,94 @@ Create a `config.json` in the project root:
 
 ---
 
-## 🧠 Requirements
+## Installing Dependencies
+
+Run this command to install everything you need:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-**Key dependencies:**
-- `camoufox`
-- `pystyle`
-- `colorama`
-- `beautifulsoup4`
-- `notifypy`
-- `groq`
-- `requests`
-- `asyncio`
+The main packages include:
+- `camoufox` — Browser automation
+- `pystyle` — Terminal styling
+- `colorama` — Colored text
+- `beautifulsoup4` — HTML parsing
+- `notifypy` — Desktop notifications
+- `groq` — AI captcha solving
+- `requests` — HTTP requests
+- `asyncio` — Async operations
 
 ---
 
-## 🚀 Usage
+## Running Glacier
+
+Just run:
 
 ```bash
 python main.py
 ```
 
-Once started, **Glacier** will:
-1. Rotate proxies from `proxies.txt`
-2. Generate realistic usernames and DOBs  
-3. Fill registration forms automatically  
-4. Solve captchas using AI or manual fallback  
-5. Verify accounts via IMAP  
-6. Log results with stunning color output  
+Once it starts, Glacier will:
+1. Pick proxies from your list
+2. Generate realistic usernames and birthdays
+3. Fill out Discord's registration form
+4. Solve any captchas that appear (using AI or manual help)
+5. Verify the account through email
+6. Show you colorful progress updates in real-time
 
 ---
 
-## 🧬 Captcha Solving Workflow
+## How Captcha Solving Works
 
-The AI Solver uses a **Groq-powered LLaMA model**:
-- Detects hCaptcha challenges via DOM inspection
-- Switches to accessibility challenges automatically
-- Parses text-based prompts
-- Submits answers through human-like typing simulation
+The AI solver is powered by Groq's LLaMA model:
+- It detects when Discord throws up a captcha
+- Automatically switches to text-based challenges
+- Reads the question and figures out the answer
+- Types the response just like a human would
 
 ---
 
-## 📡 Proxy Format
+## Setting Up Proxies
 
-Supports the following:
+Add your proxies to `proxies.txt`, one per line. Supported formats:
+
 ```
 http://user:pass@host:port
 socks5://user:pass@host:port
 host:port
 ```
 
-Each line in `proxies.txt` represents a proxy entry.
-
 ---
 
-## 📜 Logging Example
+## What the Logs Look Like
+
+You'll see colorful messages like:
 
 ```
-[glacier] [18:12:35] [Success] -> 🎉 Captcha solved successfully (2 challenges)
-[glacier] [18:12:40] [Info] -> Account verified and active ✅
-[glacier] [18:12:45] [Warning] -> Rate limit detected, retrying in 15s...
+[glacier] [18:12:35] [Success] → 🎉 Captcha solved successfully (2 challenges)
+[glacier] [18:12:40] [Info] → Account verified and active ✅
+[glacier] [18:12:45] [Warning] → Rate limit detected, retrying in 15s...
 ```
 
 ---
 
-## 🧑‍💻 Developer
+## Credits
 
-**Author:** `Notiny X Termwave`  
-**Contributor:** `DevDream`  
-**Project:** Ultimate Discord Automation Suite  
-**License:** MIT  
-**Created With:** 💙 Python + Async Magic
+**Created by:** Notiny X Termwave  
+**Contributed by:** DevDream  
+**Built with:** Python, async programming, and a lot of coffee ☕
 
 ---
 
-## ⚠️ Disclaimer
+## Important Notice
 
-This project is intended for **educational and research purposes only**.  
-The author does **not endorse** or **take responsibility** for misuse, spam, or violations of Discord’s Terms of Service.
+**This tool is for educational purposes only.** 
+
+I'm sharing this to help people learn about automation, web scraping, and async programming. Please use it responsibly and ethically. I'm not responsible for how you use this tool, and I don't encourage breaking Discord's Terms of Service or creating spam accounts.
+
+Be cool, be responsible, and happy coding! 💙
 
 ---
 
-<p align="center">💻 Crafted with precision and style — Notiny X Termwave</p>
+*Made with care by Notiny X Termwave*
